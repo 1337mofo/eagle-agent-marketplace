@@ -13,6 +13,9 @@ from models.agent import Agent, AgentType, VerificationStatus
 from models.listing import Listing, ListingType, ListingStatus
 from models.transaction import Transaction, TransactionType, TransactionStatus
 
+# Import API routers
+from api import fulfillment_endpoints, stripe_endpoints, referral_endpoints
+
 # Initialize FastAPI app
 app = FastAPI(
     title="Agent Eagle API",
@@ -28,6 +31,11 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Include API routers
+app.include_router(fulfillment_endpoints.router)
+app.include_router(stripe_endpoints.router)
+app.include_router(referral_endpoints.router)
 
 
 # Pydantic Schemas for Request/Response
